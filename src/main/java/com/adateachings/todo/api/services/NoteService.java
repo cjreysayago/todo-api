@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class NoteService {
@@ -32,6 +33,10 @@ public class NoteService {
 
     public Note store(Note note) {
         return this.noteRepository.save(note);
+    }
+
+    public Optional<Note> find(long id) {
+        return this.noteRepository.findById(id);
     }
 
 }

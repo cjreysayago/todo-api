@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RequestMapping("notes")
 @RestController
@@ -32,7 +33,22 @@ public class NoteController {
     }
 
     @PostMapping("")
-    public Map<String, Object> store(@RequestBody Note note) {
-        return this.noteService.store(note).getNote();
+    public ResponseEntity<Map> store(@RequestBody Note note) {
+        Map<String, Object> response = new HashMap();
+        response.put("notes", this.noteService.store(note).getNote());
+        response.put("status", HttpStatus.CREATED.value());
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Map> find(@PathVariable("id") long id) {
+        Optional<Note> note = this.noteService.find(id);
+
+        Map<String, Object> response = new HashMap();
+        response.put("data", note);
+        response.put("status", note.isEmpty() ? HttpStatus.NOT_FOUND.value(): HttpStatus.OK.value());
+
+        return new ResponseEntity<>(response, note.isEmpty() ? HttpStatus.NOT_FOUND: HttpStatus.OK);
     }
 }
