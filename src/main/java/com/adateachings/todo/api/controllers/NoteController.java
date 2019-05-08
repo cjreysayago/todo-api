@@ -22,17 +22,17 @@ public class NoteController {
 
     @GetMapping("")
     public ResponseEntity<Map> index() {
-        ArrayList<Note> notes = this.noteService.index();
+        ArrayList<Map<String, Object>> notes = this.noteService.index();
 
-        Map response = new HashMap();
-        response.put("data", notes);
-        response.put("status", notes.size() > 0 ? HttpStatus.OK.value() : HttpStatus.NOT_FOUND.value());
+        Map<String, Object> response = new HashMap();
+        response.put("notes", notes);
+        response.put("status", HttpStatus.OK.value());
 
-        return new ResponseEntity<>(response, notes.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("")
-    public Note store(@RequestBody Note note) {
-        return this.noteService.store(note);
+    public Map<String, Object> store(@RequestBody Note note) {
+        return this.noteService.store(note).getNote();
     }
 }

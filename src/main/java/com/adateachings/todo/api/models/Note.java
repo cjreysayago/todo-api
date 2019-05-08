@@ -3,18 +3,21 @@ package com.adateachings.todo.api.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
 @Table(name = "notes")
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private String description;
 
-    public Note(@JsonProperty("id") UUID id,
+    protected Note() {};
+    public Note(@JsonProperty("id") Long id,
                 @JsonProperty("title") String title,
                 @JsonProperty("description") String description) {
         this.id = id;
@@ -22,27 +25,13 @@ public class Note {
         this.description = description;
     }
 
-    public UUID getId() {
-        return id;
-    }
+    public Map<String, Object> getNote() {
+        Map<String, Object> note = new HashMap();
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+        note.put("id", this.id);
+        note.put("title", this.title);
+        note.put("description", this.description);
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        return note;
     }
 }
