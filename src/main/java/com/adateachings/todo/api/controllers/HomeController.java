@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-    @GetMapping("")
+    @GetMapping("v1")
     public String index() {
         return "Welcome to our TODO API";
     }

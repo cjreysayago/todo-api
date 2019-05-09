@@ -22,33 +22,58 @@ public class NoteController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Map> index() {
-        ArrayList<Map<String, Object>> notes = this.noteService.index();
+    public Map index() {
+        ArrayList<Note> notes = this.noteService.index();
 
         Map<String, Object> response = new HashMap();
         response.put("notes", notes);
         response.put("status", HttpStatus.OK.value());
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 
     @PostMapping("")
-    public ResponseEntity<Map> store(@RequestBody Note note) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Map store(@RequestBody Note note) {
         Map<String, Object> response = new HashMap();
-        response.put("notes", this.noteService.store(note).getNote());
+        response.put("note", this.noteService.store(note));
         response.put("status", HttpStatus.CREATED.value());
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return response;
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Map> find(@PathVariable("id") long id) {
+    public Map find(@PathVariable("id") long id) {
         Optional<Note> note = this.noteService.find(id);
 
         Map<String, Object> response = new HashMap();
-        response.put("data", note);
-        response.put("status", note.isEmpty() ? HttpStatus.NOT_FOUND.value(): HttpStatus.OK.value());
+        response.put("note", note);
+        response.put("status", HttpStatus.OK.value());
 
-        return new ResponseEntity<>(response, note.isEmpty() ? HttpStatus.NOT_FOUND: HttpStatus.OK);
+        return response;
+    }
+
+    @PutMapping("{id}/edit")
+    public Map edit(@PathVariable("id") long id, @RequestBody Note newNote) {
+        Optional<Note> note = this.noteService.find(id);
+
+        this.noteService.edit(note.get(), newNote);
+
+        Map<String, Object> response = new HashMap();
+        response.put("note", note);
+        response.put("status", HttpStatus.OK.value());
+
+        return response;
+    }
+
+    @DeleteMapping("{id}")
+    public Map delete(@PathVariable("id") long id) {
+        Optional<Note> note = this.noteService.find(id);
+        this.noteService.delete(note);
+
+        Map<String, Object> response = new HashMap();
+        response.put("status", HttpStatus.OK.value());
+
+        return response;
     }
 }

@@ -25,13 +25,27 @@ public class Note {
         this.description = description;
     }
 
-    public Map<String, Object> getNote() {
-        Map<String, Object> note = new HashMap();
+    public Long getId() {
+        return id;
+    }
 
-        note.put("id", this.id);
-        note.put("title", this.title);
-        note.put("description", this.description);
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        return note;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
