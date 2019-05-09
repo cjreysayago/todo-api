@@ -20,6 +20,7 @@ public class NoteController {
         this.noteService = noteService;
     }
 
+    @CrossOrigin
     @GetMapping("")
     public Map index() {
         ArrayList<Note> notes = this.noteService.index();
@@ -31,6 +32,7 @@ public class NoteController {
         return response;
     }
 
+    @CrossOrigin
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public Map store(@RequestBody Note note) {
@@ -41,6 +43,7 @@ public class NoteController {
         return response;
     }
 
+    @CrossOrigin
     @GetMapping("{id}")
     public Map find(@PathVariable("id") long id) {
         Optional<Note> note = this.noteService.find(id);
@@ -52,6 +55,7 @@ public class NoteController {
         return response;
     }
 
+    @CrossOrigin
     @PutMapping("{id}/edit")
     public Map edit(@PathVariable("id") long id, @RequestBody Note newNote) {
         Optional<Note> note = this.noteService.find(id);
@@ -65,6 +69,7 @@ public class NoteController {
         return response;
     }
 
+    @CrossOrigin
     @DeleteMapping("{id}")
     public Map delete(@PathVariable("id") long id) {
         Optional<Note> note = this.noteService.find(id);
