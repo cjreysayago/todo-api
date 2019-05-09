@@ -3,7 +3,6 @@ package com.adateachings.todo.api.controllers;
 import com.adateachings.todo.api.models.Note;
 import com.adateachings.todo.api.services.NoteService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

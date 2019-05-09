@@ -3,9 +3,6 @@ package com.adateachings.todo.api.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @Entity
 @Table(name = "notes")
